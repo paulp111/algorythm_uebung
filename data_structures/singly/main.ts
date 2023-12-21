@@ -1,4 +1,4 @@
-class ListNode {
+/*class ListNode {
     value: number;
     next: ListNode | null;
     constructor(value: number) {
@@ -150,4 +150,4 @@ myList.pop();
 const head = new ListNode(5);
 head.next = new ListNode(10);
 head.next.next = new ListNode(20);
-console.log(head);
+console.log(head);*/
