@@ -12,7 +12,7 @@ var DoublyLinkedList = /** @class */ (function () {
         this.tail = null;
         this.length = 0;
     }
-    //Append
+    // Append
     DoublyLinkedList.prototype.append = function (value) {
         var newNode = new ListNode(value);
         if (!this.head) {
@@ -26,12 +26,12 @@ var DoublyLinkedList = /** @class */ (function () {
         }
         this.length++;
     };
-    //Pop
+    // Pop
     DoublyLinkedList.prototype.pop = function () {
         if (!this.tail) {
             return undefined;
         }
-        var toRemove = this.tail;
+        var temp = this.tail; // Renamed from toRemove to temp
         this.tail = this.tail.prev;
         if (this.tail) {
             this.tail.next = null;
@@ -40,27 +40,38 @@ var DoublyLinkedList = /** @class */ (function () {
             this.head = null;
         }
         this.length--;
-        return toRemove.value;
+        return temp.value;
     };
-    //shift
+    // Shift
     DoublyLinkedList.prototype.shift = function () {
-        if (this.length === 0) {
+        if (!this.head) {
             return undefined;
         }
-        var prevHead = this.head;
-        if (!prevHead) {
-            return undefined;
-        }
-        this.head = prevHead.next;
+        var temp = this.head; // Renamed from prevHead to temp
+        this.head = this.head.next;
         if (this.head) {
             this.head.prev = null;
         }
         else {
             this.tail = null;
         }
-        prevHead.next = null;
         this.length--;
-        return prevHead;
+        temp.next = null;
+        return temp;
+    };
+    // Unshift
+    DoublyLinkedList.prototype.unshift = function (value) {
+        var newNode = new ListNode(value);
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        else {
+            this.head.prev = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+        this.length++;
     };
     return DoublyLinkedList;
 }());
@@ -73,15 +84,4 @@ myList.append(45);
 myList.append(55);
 myList.append(65);
 myList.append(75);
-function printList(list) {
-    var current = list.head;
-    while (current !== null) {
-        console.log(current.value);
-        current = current.next;
-    }
-}
-printList(myList);
-console.log('Pop:', myList.pop());
-var shiftedNode = myList.shift();
-console.log('Shift:', shiftedNode ? shiftedNode.value : undefined);
-printList(myList);
+myList.unshift(1);

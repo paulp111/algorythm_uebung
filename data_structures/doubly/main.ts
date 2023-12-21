@@ -14,7 +14,8 @@ class DoublyLinkedList<T> {
     length: number = 0;
 
     constructor() { }
-    //Append
+
+    // Append
     append(value: T) {
         const newNode = new ListNode(value);
         if (!this.head) {
@@ -27,12 +28,13 @@ class DoublyLinkedList<T> {
         }
         this.length++;
     }
-    //Pop
+
+    // Pop
     pop(): T | undefined {
         if (!this.tail) {
             return undefined;
         }
-        const toRemove = this.tail;
+        const temp = this.tail;  // Renamed from toRemove to temp
         this.tail = this.tail.prev;
         if (this.tail) {
             this.tail.next = null;
@@ -40,33 +42,40 @@ class DoublyLinkedList<T> {
             this.head = null;
         }
         this.length--;
-        return toRemove.value;
+        return temp.value;
     }
-    //shift
+
+    // Shift
     shift(): ListNode<T> | undefined {
-        if (this.length === 0) {
+        if (!this.head) {
             return undefined;
         }
-
-        const prevHead = this.head;
-        if (!prevHead) {
-            return undefined;
-        }
-
-        this.head = prevHead.next;
+        const temp = this.head;  // Renamed from prevHead to temp
+        this.head = this.head.next;
         if (this.head) {
             this.head.prev = null;
         } else {
             this.tail = null;
         }
-
-        prevHead.next = null;
         this.length--;
-        return prevHead;
+        temp.next = null;
+        return temp;
+    }
+
+    // Unshift
+    unshift(value: T) {
+        const newNode = new ListNode(value);
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            this.head.prev = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+        this.length++;
     }
 }
-
-
 
 const myList = new DoublyLinkedList<number>();
 
@@ -79,19 +88,4 @@ myList.append(55);
 myList.append(65);
 myList.append(75);
 
-function printList<T>(list: DoublyLinkedList<T>) {
-    let current = list.head;
-    while (current !== null) {
-        console.log(current.value);
-        current = current.next;
-    }
-}
-
-printList(myList);
-
-console.log('Pop:', myList.pop());
-
-const shiftedNode = myList.shift();
-console.log('Shift:', shiftedNode ? shiftedNode.value : undefined);
-
-printList(myList);
+myList.unshift(1);
