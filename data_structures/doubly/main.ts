@@ -34,7 +34,7 @@ class DoublyLinkedList<T> {
         if (!this.tail) {
             return undefined;
         }
-        const temp = this.tail;  // Renamed from toRemove to temp
+        const temp = this.tail;  
         this.tail = this.tail.prev;
         if (this.tail) {
             this.tail.next = null;
@@ -50,7 +50,7 @@ class DoublyLinkedList<T> {
         if (!this.head) {
             return undefined;
         }
-        const temp = this.head;  // Renamed from prevHead to temp
+        const temp = this.head;  
         this.head = this.head.next;
         if (this.head) {
             this.head.prev = null;
@@ -88,4 +88,5 @@ myList.append(55);
 myList.append(65);
 myList.append(75);
 
+myList.unshift(1);
 myList.unshift(1);
